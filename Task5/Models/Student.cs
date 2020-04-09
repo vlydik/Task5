@@ -12,5 +12,6 @@ namespace Task5.Models
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Studies { get; set; }
+        public Enrollment enrollment { get; set; }
     }
 }

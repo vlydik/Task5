@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Task5.Models;
 
 namespace Task5.Controllers
 {
@@ -12,10 +13,10 @@ namespace Task5.Controllers
     public class EnrollmentsController : ControllerBase
     {
         [HttpPost]
-        public IActionResult EnrollStudent()
+        public IActionResult EnrollStudent(Student student)
         {
 
-            return Ok();
+            return Ok(student);
         }
     }
 }
