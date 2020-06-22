@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Task5.Models;
 using Task5.DTOs.Requests;
 using System.Data.SqlClient;
-using Task5.DTOs.Responses; 
+using Task5.DTOs.Responses;
 
 namespace Task5.Controllers
 {
@@ -74,13 +74,55 @@ namespace Task5.Controllers
                     {
                         dr.Close();
                         tran.Rollback();
-                        return BadRequest();
+                        return BadRequest("Error");
                     }
                     tran.Commit();
                 }
-            }
 
-            return Ok("Success");
+
+
+                return Ok("Success");
+            }
+        }
+        [HttpPost(Name = "PromoteStudent")]
+        public IActionResult PromoteStudent(PromoteStudentResponse response)
+        {
+            PromoteStudentResponse result = new PromoteStudentResponse();
+
+            using (var con = new SqlConnection("[Data Source=db-mssql;Initial Catalog=s19183;Integrated Security=True]"))
+            {
+                using (var com = new SqlCommand())
+                { 
+                    com.Connection = con;
+                    com.Parameters.AddWithValue("Semester", response.Semester);
+                    com.Parameters.AddWithValue("Studies", response.Studies);
+                    com.CommandText = "SELECT * FROM Enrollment e JOIN Studies s ON e.IdStudy=s.IdStudy WHERE e.Semester = @Semester AND s.Name=@Studies; ";
+                    con.Open();
+                    var transaction = con.BeginTransaction();
+                    com.Transaction = transaction;
+
+                    var dr = com.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        dr.Close();
+                        com.CommandText = "MyProcedure";
+                        com.CommandType = System.Data.CommandType.StoredProcedure;
+                        com.ExecuteNonQuery();
+
+                        result.Studies = response.Studies;
+                        result.Semester = response.Semester + 1;
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return BadRequest("Error");
+                    }
+
+
+                }
+
+            }
         }
     }
- }
+
+}

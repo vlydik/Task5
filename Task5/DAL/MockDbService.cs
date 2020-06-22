@@ -16,9 +16,11 @@ namespace Task5.DAL
             {
                 new Student{IndexNumber = $"s{new Random().Next(1, 2000)}", FirstName= "Jan", LastName= "Kowalski"},
 
-                new Student{IndexNumber = $"s{new Random().Next(1, 2000)}", FirstName = "Anna", LastName = "Malewski"},
+                new Student{IndexNumber = $"s{new Random().Next(1, 2000)}", FirstName = "Anna", LastName = "Malewska"},
 
-                new Student{IndexNumber = $"s{new Random().Next(1, 2000)}", FirstName="Andrzej", LastName="Andrzejewicz"}
+                new Student{IndexNumber = $"s{new Random().Next(1, 2000)}", FirstName="Andrzej", LastName="Andrzejewski"},
+
+                new Student{IndexNumber = $"s{new Random().Next(1, 2000)}", FirstName="Michal", LastName="Tomaszewski"}
             };
         }
 
